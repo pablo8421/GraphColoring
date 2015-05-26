@@ -1,4 +1,5 @@
 
+import java.util.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -33,6 +34,23 @@ public class Coloracion extends javax.swing.JFrame {
         initComponents();
     }
 
+    private void llenarResultados(int backtraking[][], int coloresB, long tBacktraking,int greedy[][], int coloresG, long tGreedy){
+        String formato = "\t\t (%-5.5s) \t (%-5.5s)\n";
+        Formatter fmt = new Formatter();
+        for(int i =0; i < backtraking[0].length; i++){
+            String back = backtraking[0][i] + ", " + backtraking[1][i];
+            String greed = greedy[0][i] + ", " + greedy[1][i];
+            fmt.format(formato, back, greed);            
+        }
+        String titulo = "\t    Backtraking \t Greedy\n";
+        formato= "\t\t %5s           %5s\n";
+        fmt.format(formato, "C: "+ coloresB, "C: "+ coloresG);
+        formato= "\t\t %5s   %5s\n";
+        fmt.format(formato, "T: "+ tBacktraking + " ns  ", "T: "+ tGreedy + " ns  ");
+        
+        textResultado.setText(titulo + fmt.toString());
+    }
+    
     public void generarResultado(){
 
         //BACKTRAKING
@@ -58,9 +76,7 @@ public class Coloracion extends javax.swing.JFrame {
                 colorador.reiniciar();
             }
         }
-        
-        textResultado.setText(colorador.resultado + "\nTiempo: " + tiempoB + " ns");
-        
+                
         //Greedy
         long tiempoG;
         
@@ -70,7 +86,8 @@ public class Coloracion extends javax.swing.JFrame {
         greedy.colorear();
         tiempoG = System.nanoTime() - tiempoG;
         
-        textResultado.setText(textResultado.getText() + "\n"+greedy.resultado + "\nTiempo: " + tiempoG + " ns");
+        llenarResultados(colorador.resultado, colorador.m, tiempoB,
+                            greedy.resultado, greedy.colores, tiempoG);
     }
     
     /**
@@ -129,7 +146,7 @@ public class Coloracion extends javax.swing.JFrame {
                         .addComponent(labelVertices)
                         .addGap(18, 18, 18)
                         .addComponent(textCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 177, Short.MAX_VALUE)))
+                        .addGap(0, 91, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -141,7 +158,7 @@ public class Coloracion extends javax.swing.JFrame {
                     .addComponent(textCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVertices))
                 .addGap(38, 38, 38)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

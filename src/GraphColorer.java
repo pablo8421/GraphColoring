@@ -14,7 +14,7 @@ public class GraphColorer {
     public int x[]; //Solution vector
     public int n, m;
     
-    public String resultado;
+    public int resultado[][];
     public boolean encontrado;
 
     public void mColoring(int k)
@@ -68,12 +68,12 @@ public class GraphColorer {
 
     private void write()
     {
-        resultado = "Backtracking: ";
+        resultado = new int[2][n];
         for (int i = 1; i <= n; i++)
         {
-            resultado += "  (" + i + ", " + x[i] + ")";  //solution vector
+            resultado[0][i-1]= i;
+            resultado[1][i-1]= x[i];
         }
-        resultado += "  Colores: "+m;
     }
 
     public void llenarGrafo(int grafo[][]){
