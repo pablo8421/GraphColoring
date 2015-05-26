@@ -47,6 +47,9 @@ public class Coloracion extends javax.swing.JFrame {
         colorador.llenarGrafo(matriz, num);
         colorador.resultado = "";
         
+        GreedyColorer greedy = new GreedyColorer(matriz);
+        greedy.colorear();
+        
         tiempo = System.nanoTime();
         colorador.mColoring(1);
         tiempo = System.nanoTime() - tiempo;

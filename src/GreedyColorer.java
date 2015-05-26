@@ -10,9 +10,20 @@
  */
 public class GreedyColorer {
 
-    int n;
-    int G[][];
+    public int n;
+    public int G[][];
 
+    public GreedyColorer(int G[][]){
+        this.G = G;
+        n = G.length;
+    }
+    
+    public void mostrarResultado(int result[]){
+        for(int i = 0; i < result.length; i++){
+            System.out.println("Vertice " + i + ":  " + result[i]);
+        }
+    }
+    
     public void colorear()
     {
         int result[] = new int[n];
@@ -41,7 +52,7 @@ public class GreedyColorer {
             // as unavailable
             for(int i =0; i < G.length; i++){
                 if(G[u][i] == 1 && result[i] != -1){
-                    available[i] = true;
+                    available[result[i]] = true;
                 }
             }
             // Find the first available color
@@ -63,5 +74,6 @@ public class GreedyColorer {
                 }
             }
         }
+        mostrarResultado(result);
     }
 }
