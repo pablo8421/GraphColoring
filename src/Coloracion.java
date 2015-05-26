@@ -44,6 +44,7 @@ public class Coloracion extends javax.swing.JFrame {
         }
         
         GraphColorer colorador = new GraphColorer();
+        colorador.encontrado = false;
         colorador.llenarGrafo(matriz, num);
         colorador.resultado = "";
         

@@ -21,7 +21,7 @@ public class GreedyColorer {
     public void mostrarResultado(int result[]){
         for(int i = 0; i < result.length; i++){
             result[i]++;
-            System.out.println("Vertice " + i + ":  " + result[i]);
+            System.out.println("Vertice " + (i+1) + ":  " + result[i]);
         }
     }
     

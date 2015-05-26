@@ -15,6 +15,7 @@ public class GraphColorer {
     public int n, m, soln;
     
     public String resultado;
+    public boolean encontrado;
 
     public void mColoring(int k)
     {  //backtracking function
@@ -28,11 +29,15 @@ public class GraphColorer {
             if (k == n)  //if all colored then show
             {
                 write();
+                encontrado = true;
                 break;
             } 
             else
             {
                 mColoring(k + 1);  /* successful but still left to color */
+                if(encontrado){
+                    break;
+                }
             }
         }
     }
