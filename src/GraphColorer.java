@@ -28,6 +28,7 @@ public class GraphColorer {
             if (k == n)  //if all colored then show
             {
                 write();
+                break;
             } 
             else
             {
