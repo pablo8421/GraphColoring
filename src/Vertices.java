@@ -27,7 +27,7 @@ public class Vertices extends javax.swing.JFrame {
     public JCheckBox lista[][];
     private int cant;
     public int resultado[][];
-    
+        
     public Vertices (int cant, Coloracion otro){
         setTitle("Vertices");
         setResizable(false);

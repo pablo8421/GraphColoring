@@ -20,6 +20,16 @@ public class Coloracion extends javax.swing.JFrame {
     Vertices vertices;
     public int matriz[][];
     
+    public int uno[][] = new int[][]{{0,1,1,1},
+                                     {1,0,1,0},
+                                     {1,1,0,1},
+                                     {1,0,1,0}};
+    public int dos[][];
+    public int tres[][];
+    public int cuatro[][];
+
+    
+    
     /**
      * Creates new form Coloracion
      */
@@ -34,6 +44,19 @@ public class Coloracion extends javax.swing.JFrame {
         initComponents();
     }
 
+    private void agregarMatriz(){
+        String grafo = "\n\n";
+        for(int i= 0;i < matriz.length;i++){
+            grafo += "\t";
+            for(int j= 0;j < matriz.length;j++){
+                grafo += matriz[i][j] + "  ";
+            }
+            grafo += "\n";
+        }
+        
+        textResultado.setText(textResultado.getText() + grafo);
+    }
+    
     private void llenarResultados(int backtraking[][], int coloresB, long tBacktraking,int greedy[][], int coloresG, long tGreedy){
         String formato = "\t\t (%-5.5s) \t (%-5.5s)\n";
         Formatter fmt = new Formatter();
@@ -49,6 +72,7 @@ public class Coloracion extends javax.swing.JFrame {
         fmt.format(formato, "T: "+ tBacktraking + " ns  ", "T: "+ tGreedy + " ns  ");
         
         textResultado.setText(titulo + fmt.toString());
+        agregarMatriz();
     }
     
     public void generarResultado(){
@@ -101,23 +125,17 @@ public class Coloracion extends javax.swing.JFrame {
     {
 
         labelVertices = new javax.swing.JLabel();
-        textCantidad = new javax.swing.JTextField();
         btnVertices = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         textResultado = new javax.swing.JTextArea();
+        lablePredefinidos = new javax.swing.JLabel();
+        spinerNum = new javax.swing.JSpinner();
+        comboPred = new javax.swing.JComboBox();
+        btnPred = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         labelVertices.setText("Cantidad de vertices:");
-
-        textCantidad.setText("4");
-        textCantidad.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                textCantidadActionPerformed(evt);
-            }
-        });
 
         btnVertices.setText("Ingresar Vertices");
         btnVertices.addActionListener(new java.awt.event.ActionListener()
@@ -132,6 +150,21 @@ public class Coloracion extends javax.swing.JFrame {
         textResultado.setRows(5);
         jScrollPane1.setViewportView(textResultado);
 
+        lablePredefinidos.setText("Predefinidos");
+
+        spinerNum.setValue(4);
+
+        comboPred.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "4 Vertices", "5 Vertices", "6 Vertices", "7 Vertices", "8 Vertices" }));
+
+        btnPred.setText("Ejecutar Predefinido");
+        btnPred.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnPredActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,12 +174,20 @@ public class Coloracion extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnVertices)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lablePredefinidos)
+                            .addComponent(btnVertices))
                         .addGap(18, 18, 18)
-                        .addComponent(labelVertices)
-                        .addGap(18, 18, 18)
-                        .addComponent(textCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 91, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelVertices)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spinerNum))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(comboPred, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnPred)))
+                        .addGap(0, 52, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -155,20 +196,20 @@ public class Coloracion extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelVertices)
-                    .addComponent(textCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVertices))
-                .addGap(38, 38, 38)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                    .addComponent(btnVertices)
+                    .addComponent(spinerNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lablePredefinidos)
+                    .addComponent(comboPred, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPred))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void textCantidadActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_textCantidadActionPerformed
-    {//GEN-HEADEREND:event_textCantidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textCantidadActionPerformed
 
     private void btnVerticesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnVerticesActionPerformed
     {//GEN-HEADEREND:event_btnVerticesActionPerformed
@@ -177,12 +218,34 @@ public class Coloracion extends javax.swing.JFrame {
         }
         int num;
         try{
-            num = Integer.parseInt(textCantidad.getText());
+            num = (int) spinerNum.getValue();
         }catch(Exception e){
             num = 4;
         }
         vertices= new Vertices(num, this);
     }//GEN-LAST:event_btnVerticesActionPerformed
+
+    private void btnPredActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnPredActionPerformed
+    {//GEN-HEADEREND:event_btnPredActionPerformed
+        int seleccionado = comboPred.getSelectedIndex();
+        seleccionado++;
+        
+        switch(seleccionado){
+            case 1:
+                matriz = uno;
+                break;
+            case 2: 
+                matriz = dos;
+                break;
+            case 3: 
+                matriz = tres;
+                break;
+            case 4: 
+                matriz = cuatro;
+                break;
+        }
+        generarResultado();
+    }//GEN-LAST:event_btnPredActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,10 +292,13 @@ public class Coloracion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPred;
     private javax.swing.JButton btnVertices;
+    private javax.swing.JComboBox comboPred;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelVertices;
-    private javax.swing.JTextField textCantidad;
+    private javax.swing.JLabel lablePredefinidos;
+    private javax.swing.JSpinner spinerNum;
     private javax.swing.JTextArea textResultado;
     // End of variables declaration//GEN-END:variables
 }
