@@ -68,6 +68,7 @@ public class Vertices extends javax.swing.JFrame {
             {
                 llenarArray();
                 otro.matriz = resultado;
+                e.getWindow().setVisible(false);
                 otro.generarResultado();
             }
         });

@@ -12,6 +12,7 @@ public class GreedyColorer {
 
     public int n;
     public int G[][];
+    public String resultado;
 
     public GreedyColorer(int G[][]){
         this.G = G;
@@ -19,10 +20,12 @@ public class GreedyColorer {
     }
     
     public void mostrarResultado(int result[]){
+        resultado = "      Greddy: ";
         for(int i = 0; i < result.length; i++){
             result[i]++;
-            System.out.println("Vertice " + (i+1) + ":  " + result[i]);
+            resultado += "  (" + (i+1) + ", " + result[i] + ")";  //solution vector
         }
+        resultado += "  Colores: "+ max(result);
     }
     
     public void colorear()
@@ -76,5 +79,16 @@ public class GreedyColorer {
             }
         }
         mostrarResultado(result);
+    }
+
+    private int max(int[] result)
+    {
+        int max = 0;
+        for(int num : result){
+            if(num > max){
+                max = num;
+            }
+        }
+        return max;
     }
 }

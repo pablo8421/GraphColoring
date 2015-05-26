@@ -34,31 +34,43 @@ public class Coloracion extends javax.swing.JFrame {
     }
 
     public void generarResultado(){
-        int num;
-        long tiempo;
+
+        //BACKTRAKING
+        long tiempoB = 0;
         
-        try{
-            num = Integer.parseInt(textColores.getText());
-        }catch(Exception e){
-            num = 3;
-        }
-        
+        //Crear la clase
         GraphColorer colorador = new GraphColorer();
         colorador.encontrado = false;
-        colorador.llenarGrafo(matriz, num);
-        colorador.resultado = "";
+        colorador.llenarGrafo(matriz);
+        
+        //Ciclo iterando desde un color
+        boolean sinColorear = true;
+        int num = 0;
+        tiempoB = System.nanoTime();
+        while(sinColorear){
+            colorador.mColoring(1);
+            
+            if(colorador.encontrado){
+                tiempoB = System.nanoTime() - tiempoB;
+                sinColorear = false;
+            }
+            else{
+                colorador.reiniciar();
+            }
+        }
+        
+        textResultado.setText(colorador.resultado + "\nTiempo: " + tiempoB + " ns");
+        
+        //Greedy
+        long tiempoG;
         
         GreedyColorer greedy = new GreedyColorer(matriz);
+
+        tiempoG = System.nanoTime();
         greedy.colorear();
+        tiempoG = System.nanoTime() - tiempoG;
         
-        tiempo = System.nanoTime();
-        colorador.mColoring(1);
-        tiempo = System.nanoTime() - tiempo;
-        
-        textResultado.setText(colorador.resultado + "\n\nTotal: " + colorador.soln);
-        
-        
-        labelTiempo.setText("Tiempo tomado: "+ tiempo + " ns, " + tiempo/1000000.0 + " ms");
+        textResultado.setText(textResultado.getText() + "\n"+greedy.resultado + "\nTiempo: " + tiempoG + " ns");
     }
     
     /**
@@ -76,9 +88,6 @@ public class Coloracion extends javax.swing.JFrame {
         btnVertices = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         textResultado = new javax.swing.JTextArea();
-        textColores = new javax.swing.JTextField();
-        labelColores = new javax.swing.JLabel();
-        labelTiempo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,12 +115,6 @@ public class Coloracion extends javax.swing.JFrame {
         textResultado.setRows(5);
         jScrollPane1.setViewportView(textResultado);
 
-        textColores.setText("3");
-
-        labelColores.setText("Cantidad de colores: ");
-
-        labelTiempo.setText("Tiempo tomado: ");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,23 +124,13 @@ public class Coloracion extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(labelColores)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnVertices)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(textColores, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelVertices)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(textCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(btnVertices)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelVertices)
+                        .addGap(18, 18, 18)
+                        .addComponent(textCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 177, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(labelTiempo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,14 +139,9 @@ public class Coloracion extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelVertices)
                     .addComponent(textCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textColores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelColores))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnVertices)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelTiempo)
+                    .addComponent(btnVertices))
+                .addGap(38, 38, 38)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
 
@@ -226,11 +214,8 @@ public class Coloracion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVertices;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel labelColores;
-    private javax.swing.JLabel labelTiempo;
     private javax.swing.JLabel labelVertices;
     private javax.swing.JTextField textCantidad;
-    private javax.swing.JTextField textColores;
     private javax.swing.JTextArea textResultado;
     // End of variables declaration//GEN-END:variables
 }
