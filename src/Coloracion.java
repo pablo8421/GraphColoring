@@ -90,6 +90,8 @@ public class Coloracion extends javax.swing.JFrame {
 
     public int cinco[][];
     
+    public int seis[][];
+    
     /**
      * Creates new form Coloracion
      */
@@ -103,10 +105,33 @@ public class Coloracion extends javax.swing.JFrame {
         
         generarNauruIncompleto();
         generarNauru();
+        generarSeis();
         
         initComponents();
     }
 
+    private void generarSeis(){
+        seis = new int[8][8];
+        
+        int[][] lista = {{1,4},
+                         {1,8},
+                         {1,6},
+                         {2,3},
+                         {2,5},
+                         {2,7},
+                         {3,6},
+                         {3,8},
+                         {4,5},
+                         {4,7},
+                         {5,8},
+                         {6,7}};
+        
+        for(int i=0; i < lista.length; i++){
+            seis[lista[i][0]-1][lista[i][1]-1] = 1;
+            seis[lista[i][1]-1][lista[i][0]-1] = 1;
+        }        
+    }
+    
     private void generarNauruIncompleto(){
         for(int i=0; i < 24; i++){
             for(int j=0; j < 24; j++){ 
@@ -234,6 +259,17 @@ public class Coloracion extends javax.swing.JFrame {
     
     public void generarResultado(){
 
+        //Greedy
+        long tiempoG;
+        
+        GreedyColorer greedy = new GreedyColorer(matriz);
+
+        tiempoG = System.nanoTime();
+        greedy.colorear();
+        tiempoG = System.nanoTime() - tiempoG;
+
+        System.out.println("Greedy termino, " + tiempoG);
+        
         //BACKTRAKING
         long tiempoB = 0;
         
@@ -257,15 +293,6 @@ public class Coloracion extends javax.swing.JFrame {
                 colorador.reiniciar();
             }
         }
-                
-        //Greedy
-        long tiempoG;
-        
-        GreedyColorer greedy = new GreedyColorer(matriz);
-
-        tiempoG = System.nanoTime();
-        greedy.colorear();
-        tiempoG = System.nanoTime() - tiempoG;
         
         llenarResultados(colorador.resultado, colorador.m, tiempoB,
                             greedy.resultado, greedy.colores, tiempoG);
@@ -303,6 +330,7 @@ public class Coloracion extends javax.swing.JFrame {
             }
         });
 
+        textResultado.setEditable(false);
         textResultado.setColumns(20);
         textResultado.setRows(5);
         jScrollPane1.setViewportView(textResultado);
@@ -311,7 +339,7 @@ public class Coloracion extends javax.swing.JFrame {
 
         spinerNum.setValue(4);
 
-        comboPred.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "4 Vertices", "10 Vertices", "Nauru Inc", "Nauru Ish", "Random" }));
+        comboPred.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "4 Vertices", "10 Vertices", "Nauru Inc", "Nauru Ish", "Random", "Grafo bipartido" }));
 
         btnPred.setText("Ejecutar Predefinido");
         btnPred.addActionListener(new java.awt.event.ActionListener()
@@ -344,7 +372,7 @@ public class Coloracion extends javax.swing.JFrame {
                                 .addComponent(comboPred, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnPred)))
-                        .addGap(0, 46, Short.MAX_VALUE)))
+                        .addGap(0, 27, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -403,6 +431,9 @@ public class Coloracion extends javax.swing.JFrame {
             case 5:
                 generarCinco();
                 matriz = cinco;
+                break;
+            case 6:
+                matriz = seis;
                 break;
         }
         generarResultado();
