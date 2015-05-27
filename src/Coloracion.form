@@ -45,7 +45,7 @@
                               <Component id="btnPred" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="52" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="46" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -118,12 +118,10 @@
     <Component class="javax.swing.JComboBox" name="comboPred">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
+          <StringArray count="3">
             <StringItem index="0" value="4 Vertices"/>
-            <StringItem index="1" value="5 Vertices"/>
-            <StringItem index="2" value="6 Vertices"/>
-            <StringItem index="3" value="7 Vertices"/>
-            <StringItem index="4" value="8 Vertices"/>
+            <StringItem index="1" value="10 Vertices"/>
+            <StringItem index="2" value="null"/>
           </StringArray>
         </Property>
       </Properties>

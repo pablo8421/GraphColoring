@@ -24,7 +24,17 @@ public class Coloracion extends javax.swing.JFrame {
                                      {1,0,1,0},
                                      {1,1,0,1},
                                      {1,0,1,0}};
-    public int dos[][];
+    
+    public int dos[][] = new int[][]{{0,1,0,0,1,1,0,0,0,0},
+                                     {1,0,1,0,0,0,1,0,0,0},
+                                     {0,1,0,1,0,0,0,1,0,0},
+                                     {0,0,1,0,1,0,0,0,1,0},
+                                     {1,0,0,1,0,0,0,0,0,1},
+                                     {1,0,0,0,0,0,0,1,1,0},
+                                     {0,1,0,0,0,0,0,0,1,1},
+                                     {0,0,1,0,0,1,0,0,0,1},
+                                     {0,0,0,1,0,1,1,0,0,0},
+                                     {0,0,0,0,1,0,1,1,0,0}};
     public int tres[][];
     public int cuatro[][];
 
@@ -154,7 +164,7 @@ public class Coloracion extends javax.swing.JFrame {
 
         spinerNum.setValue(4);
 
-        comboPred.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "4 Vertices", "5 Vertices", "6 Vertices", "7 Vertices", "8 Vertices" }));
+        comboPred.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "4 Vertices", "10 Vertices", "null" }));
 
         btnPred.setText("Ejecutar Predefinido");
         btnPred.addActionListener(new java.awt.event.ActionListener()
@@ -187,7 +197,7 @@ public class Coloracion extends javax.swing.JFrame {
                                 .addComponent(comboPred, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnPred)))
-                        .addGap(0, 52, Short.MAX_VALUE)))
+                        .addGap(0, 46, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
