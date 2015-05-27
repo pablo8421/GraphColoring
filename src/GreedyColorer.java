@@ -46,10 +46,10 @@ public class GreedyColorer {
     // A temporary array to store the available colors. True
         // value of available[cr] would mean that the color cr is
         // assigned to one of its adjacent vertices
-        boolean available[] = new boolean[n];
+        boolean[] unavailable = new boolean[n];
         for (int cr = 0; cr < n; cr++)
         {
-            available[cr] = false;
+            unavailable[cr] = false;
         }
 
         // Assign colors to remaining V-1 vertices
@@ -59,14 +59,14 @@ public class GreedyColorer {
             // as unavailable
             for(int i =0; i < G.length; i++){
                 if(G[u][i] == 1 && result[i] != -1){
-                    available[result[i]] = true;
+                    unavailable[result[i]] = true;
                 }
             }
             // Find the first available color
             int cr;
             for (cr = 0; cr < n; cr++)
             {
-                if (available[cr] == false)
+                if (unavailable[cr] == false)
                 {
                     break;
                 }
@@ -77,7 +77,7 @@ public class GreedyColorer {
             // Reset the values back to false for the next iteration
             for(int i =0; i < G.length; i++){
                 if(G[u][i] == 1 && result[i] != -1){
-                    available[i] = false;
+                    unavailable[i] = false;
                 }
             }
         }

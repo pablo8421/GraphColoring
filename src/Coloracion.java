@@ -226,6 +226,7 @@ public class Coloracion extends javax.swing.JFrame {
         fmt.format(formato, "C: "+ coloresB, "C: "+ coloresG);
         formato= "\t\t %5s   %5s\n";
         fmt.format(formato, "T: "+ tBacktraking + " ns  ", "T: "+ tGreedy + " ns  ");
+        fmt.format(formato, "T: "+ tBacktraking/1000000.0 + " ms  ", "T: "+ tGreedy/1000000.0 + " ms  ");
         
         textResultado.setText(titulo + fmt.toString());
         agregarMatriz();
