@@ -1,5 +1,6 @@
 
 import java.util.Formatter;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -87,7 +88,7 @@ public class Coloracion extends javax.swing.JFrame {
                                      {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 
 
-    
+    public int cinco[][];
     
     /**
      * Creates new form Coloracion
@@ -175,6 +176,30 @@ public class Coloracion extends javax.swing.JFrame {
         
     }
 
+    private void generarCinco(){
+        int num;
+        Random rambo = new Random();
+        try{
+            num = (int) spinerNum.getValue();
+        }catch(Exception e){
+            num = 25;
+        }
+        cinco = new int[num][num];
+        for(int i=0;i < num;i++){
+            for(int j=0;j <= i;j++){
+                if(j != i && rambo.nextBoolean()){
+                    cinco[i][j] = 1;
+                    cinco[j][i] = 1;
+                }
+                else{
+                    cinco[i][j] = 0;
+                    cinco[j][i] = 0;
+                }
+            }
+        }
+        
+    }
+    
     private void agregarMatriz(){
         String grafo = "\n\n";
         for(int i= 0;i < matriz.length;i++){
@@ -285,7 +310,7 @@ public class Coloracion extends javax.swing.JFrame {
 
         spinerNum.setValue(4);
 
-        comboPred.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "4 Vertices", "10 Vertices", "Nauru Inc", "Nauru Ish" }));
+        comboPred.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "4 Vertices", "10 Vertices", "Nauru Inc", "Nauru Ish", "Random" }));
 
         btnPred.setText("Ejecutar Predefinido");
         btnPred.addActionListener(new java.awt.event.ActionListener()
@@ -373,6 +398,10 @@ public class Coloracion extends javax.swing.JFrame {
                 break;
             case 4: 
                 matriz = cuatro;
+                break;
+            case 5:
+                generarCinco();
+                matriz = cinco;
                 break;
         }
         generarResultado();
