@@ -8,7 +8,7 @@
  *
  * @author PabloJavier
  */
-public class GraphColorer {
+public class BacktrackingColorer {
 
     public int G[][]; //G is graph's adjacency matrix 
     public int x[]; //Solution vector

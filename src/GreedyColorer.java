@@ -15,80 +15,109 @@ public class GreedyColorer {
     public int G[][];
     public int resultado[][];
 
-    public GreedyColorer(int G[][]){
+    public GreedyColorer(int G[][])
+    {
         this.G = G;
         n = G.length;
     }
-    
-    public void mostrarResultado(int result[]){
+
+    //Este metodo llena la variable resultado que 
+    //sera usada para mostrar el resultado del
+    //algoritmo greedy
+    public void llenarResultado(int result[])
+    {
         resultado = new int[2][result.length];
-        for(int i = 0; i < result.length; i++){
+        for (int i = 0; i < result.length; i++)
+        {
             result[i]++;
 
-            resultado[0][i]= i+1;
-            resultado[1][i]= result[i];
+            resultado[0][i] = i + 1;
+            resultado[1][i] = result[i];
         }
         colores = max(result);
     }
-    
+
+    //Este metodo es el que implementa el algoritmo greedy para colorear el grafo
     public void colorear()
     {
-        int result[] = new int[n];
- 
-    // Assign the first color to first vertex
-            result[0] = 0;
+        //La lista de los colores resultantes
+        int[] resultado = new int[n];
+        //n es la cantidad de vertices en el grafo
 
-        // Initialize remaining V-1 vertices as unassigned
+        //Se asigna el primer color al primer vertice
+        resultado[0] = 0;
+
+        //Se inicializan el resto de colores como no asignados
         for (int u = 1; u < n; u++)
         {
-            result[u] = -1;  // no color is assigned to u
+            resultado[u] = -1;  //-1 Representa sin asignar
         }
-    // A temporary array to store the available colors. True
-        // value of available[cr] would mean that the color cr is
-        // assigned to one of its adjacent vertices
-        boolean[] unavailable = new boolean[n];
+        
+        //Una lista de booleanas que representan si el color
+        //reprsentado por la posicion i se encuentra disponible para
+        //colorear el vertice
+        boolean[] colorDisponible = new boolean[n];
+        
+        //Se inicializa como disponibles todos los colores
         for (int cr = 0; cr < n; cr++)
         {
-            unavailable[cr] = false;
+            colorDisponible[cr] = true;
         }
 
-        // Assign colors to remaining V-1 vertices
+        //Este ciclo le asigna color al resto de vertices
         for (int u = 1; u < n; u++)
         {
-            // Process all adjacent vertices and flag their colors
-            // as unavailable
-            for(int i =0; i < G.length; i++){
-                if(G[u][i] == 1 && result[i] != -1){
-                    unavailable[result[i]] = true;
+            //Por cada vertice en el grafo...
+            for (int i = 0; i < n; i++)
+            {
+                //Se evalua que el vertice sea adjacente al vertice
+                //que buscamos asignarle un color
+                //Además se verifica que si tenga un color asignado
+                if (G[u][i] == 1 && resultado[i] != -1)
+                {
+                    //Si cumple las condiciones, significa que el color
+                    //de este vertice no esta disponible
+                    colorDisponible[resultado[i]] = false;
                 }
             }
-            // Find the first available color
+            //Se recorre entonces todos los colores hasta encontrar 
+            //el primero disponible
             int cr;
             for (cr = 0; cr < n; cr++)
             {
-                if (unavailable[cr] == false)
+                //Al encontrar un color disponible, se detiene el ciclo
+                if (colorDisponible[cr] == true)
                 {
                     break;
                 }
             }
 
-            result[u] = cr; // Assign the found color
+            //Se asigna al vertice el primer color disponible
+            resultado[u] = cr; 
 
-            // Reset the values back to false for the next iteration
-            for(int i =0; i < G.length; i++){
-                if(G[u][i] == 1 && result[i] != -1){
-                    unavailable[i] = false;
+            //Se reinicia por default a que todos los colores estan disponibles
+            for (int i = 0; i < G.length; i++)
+            {
+                if (G[u][i] == 1 && resultado[i] != -1)
+                {
+                    colorDisponible[i] = true;
                 }
             }
         }
-        mostrarResultado(result);
+        
+        //Cuando se recorren todos los vertices se retorna el resultado
+        llenarResultado(resultado);
     }
 
+    //Funcion que regresa el numero maximo
+    //Es usada para determinar la cantidad de colores usados
     private int max(int[] result)
     {
         int max = 0;
-        for(int num : result){
-            if(num > max){
+        for (int num : result)
+        {
+            if (num > max)
+            {
                 max = num;
             }
         }

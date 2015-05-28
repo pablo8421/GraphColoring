@@ -274,7 +274,7 @@ public class Coloracion extends javax.swing.JFrame {
         long tiempoB = 0;
         
         //Crear la clase
-        GraphColorer colorador = new GraphColorer();
+        BacktrackingColorer colorador = new BacktrackingColorer();
         colorador.encontrado = false;
         colorador.llenarGrafo(matriz);
         
